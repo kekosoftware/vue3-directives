@@ -1,4 +1,12 @@
 <template>
+    <div class="row my-3">
+        <div class="col-6">
+            <h3>TotalProyectos: {{ numeroProyectos }}</h3>
+        </div>
+        <div class="col-6 text-end">
+            <button @click="limpiarData" class="btn btn-warning">Limpiar Proyectos</button>
+        </div>
+    </div>
     <div class="table-responsive table-hover">
         <table class="table">
             <thead>
@@ -26,9 +34,10 @@
 <script>
 export default {
     props: [
-        'numberoProyectos',
+        'numeroProyectos',
         'proyectos',
         'cambiarEstado',
+        'limpiarData',
     ]
 }
 </script>

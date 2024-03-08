@@ -24,14 +24,22 @@ export default {
                 completado: false,
             }
             this.proyectos.push(proyecto);
+            this.saveData()
             
             this.proyecto = ""
             this.tipo = ""
             this.urgente = ""
         },
         cambiarEstado(proyecto, campo) {
-            // this.proyectos[id].urgente = !this.proyectos[id].urgente 
             proyecto[campo] = !proyecto[campo]
+            this.saveData()
+        },
+        saveData() {
+            localStorage.setItem("proyectos", JSON.stringify(this.proyectos))
+        },
+        limpiarData() {
+            this.proyectos = []
+            localStorage.clear()
         }
     },
     computed: {
@@ -46,6 +54,9 @@ export default {
             })
             return (completados * 100 / this.numeroProyectos) || 0
         }
+    },
+    mounted() {
+        this.proyectos =JSON.parse(localStorage.getItem("proyectos")) || [];
     }
 }
 </script>
@@ -55,7 +66,6 @@ export default {
         <div class="col-12 mb-3">
             <progress-bar :porcentaje="porcentaje"/>
         </div>
-        <h3>Total proyectos: {{ numeroProyectos }}</h3>
         <div class="col12 col-md-4">
             <form @submit.prevent="registrarProyecto()">
                 <div class="mb-3">
@@ -82,7 +92,8 @@ export default {
             <total-proyectos 
                 :numeroProyectos="numeroProyectos"
                 :proyectos="proyectos"
-                :cambiarEstado="cambiarEstado"/>
+                :cambiarEstado="cambiarEstado"
+                :limpiarData="limpiarData"/>
         </div>
     </div>
 </template>
